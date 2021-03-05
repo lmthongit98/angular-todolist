@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label for="input">Task Name</label>
+        <input type="text" #taskName
+          class="form-control" name="" id="input" aria-describedby="helpId" placeholder="">
+          <button (click)="onClickAdd(taskName.value)" class="btn btn-dark mt-3 mr-2">Add Task</button>
+      </div>
+      <h2>To Do</h2>
+      <table class="table text-light">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Task Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of TaskToDo; let i = index">
+            <td scope="row">{{i + 1}}</td>
+            <td>{{task.taskName}}</td>
+            <td>
+              <button (click)="onClickDone(task.id)" class="btn btn-dark mr-2"><i class="fa fa-check"></i></button>
+              <button (click)="onClickDelete(task.id)" class="btn btn-dark mr-2"><i class="fa fa-trash-alt"></i></button>
+              <button class="btn btn-dark"><i class="fa fa-edit"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-12">
+      <h2>Done</h2>
+      <table class="table text-light">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Task Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of TaskDone; let i = index">
+            <td scope="row">{{i + 1}}</td>
+            <td>{{task.taskName}}</td>
+            <td>
+              <button (click)="onClickDelete(task.id)" [ngStyle]="{'margin-right' : '100px'}" class="btn btn-dark"><i class="fa fa-trash-alt"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
