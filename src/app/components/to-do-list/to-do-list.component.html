@@ -3,10 +3,17 @@
     <div class="col-12">
       <div class="form-group">
         <label for="input">Task Name</label>
-        <input type="text" #taskName
+        <input type="text" [(ngModel)]="taskName"
           class="form-control" name="" id="input" aria-describedby="helpId" placeholder="">
-          <button (click)="onClickAdd(taskName.value)" class="btn btn-dark mt-3 mr-2">Add Task</button>
-      </div>
+
+          <ng-container *ngIf="UpdateTaskState else elseBlock">
+            <button disabled (click)="onClickAdd()" class="btn btn-dark mt-3 mr-2">Add Task</button>
+            <button (click)="onClickUpdate()" class="btn btn-dark mt-3 mr-2">Update Task</button>
+          </ng-container>
+          <ng-template #elseBlock>
+            <button (click)="onClickAdd()" class="btn btn-dark mt-3 mr-2">Add Task</button>
+            <button disabled (click)="onClickUpdate()" class="btn btn-dark mt-3 mr-2">Update Task</button>
+          </ng-template>
       <h2>To Do</h2>
       <table class="table text-light">
         <thead>
@@ -23,7 +30,7 @@
             <td>
               <button (click)="onClickDone(task.id)" class="btn btn-dark mr-2"><i class="fa fa-check"></i></button>
               <button (click)="onClickDelete(task.id)" class="btn btn-dark mr-2"><i class="fa fa-trash-alt"></i></button>
-              <button class="btn btn-dark"><i class="fa fa-edit"></i></button>
+              <button (click)="onClickEdit(task)" class="btn btn-dark"><i class="fa fa-edit"></i></button>
             </td>
           </tr>
         </tbody>

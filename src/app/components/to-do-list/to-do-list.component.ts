@@ -9,8 +9,14 @@ import { ToDoListService } from 'src/app/services/to-do-list.service';
 })
 export class ToDoListComponent implements OnInit {
 
+  public taskName:string = '';
+
+  public taskEdit:Task = new Task(-1, '', false);
+
   public TaskToDo: Task[] = [];
   public TaskDone: Task[] = [];
+
+  public UpdateTaskState = false;
 
   constructor(private toDoListService: ToDoListService) { }
 
@@ -33,19 +39,37 @@ export class ToDoListComponent implements OnInit {
     this.getDataFromService();
   }
 
+
+
+  onClickAdd(){
+    if(this.taskName.trim() != ''){
+      this.toDoListService.addTask(new Task(
+        this.toDoListService.generateID(), this.taskName.trim(), false
+      ))
+      this.getDataFromService();
+    }else{
+      alert("Please fill the task name !")
+    }
+  }
+
+  onClickEdit(task:Task){
+    this.taskEdit = task;
+    this.taskName = task.taskName;
+    this.UpdateTaskState = true;
+  }
+
+  onClickUpdate(){
+    this.taskEdit.taskName = this.taskName;
+    this.toDoListService.updateTask(this.taskEdit);
+    this.getDataFromService();
+    this.UpdateTaskState = false;
+    this.taskName = '';
+  }
+
+
   getDataFromService() {
     this.TaskToDo =  this.toDoListService.getTaskList().filter(item => !item.isDone)
     this.TaskDone =  this.toDoListService.getTaskList().filter(item => item.isDone)
-  }
-
-  onClickAdd(taskName:string){
-    if(taskName.trim() != ''){
-      this.toDoListService.addTask(new Task(
-        this.toDoListService.generateID(), taskName, false
-      ))
-      this.getDataFromService();
-      console.log( this.toDoListService.getTaskList())
-    }
   }
 
 }

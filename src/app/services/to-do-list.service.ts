@@ -35,4 +35,11 @@ export class ToDoListService {
     return Math.floor(Math.random() * Date.now());
   }
 
+  public updateTask(task:Task){
+    const index = this.taskList.findIndex(item => item.id === task.id);
+    if(index != -1){
+      this.taskList[index].taskName = task.taskName;
+    }
+  }
+
 }
